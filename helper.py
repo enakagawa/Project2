@@ -97,14 +97,14 @@ def grab_imgs(name='tank'):
         return (img1, img2, img3, img4)
 
 # Creating output directories
-def create_output_dir(out_dir='Output/'):
+def create_output_dir(out_dir='Output/', subdirs=['PCA/', 'Arithmetic/', 'DWT/', 'MHWT/', 'Edge_Detection/']):
     script_dir = os.path.dirname(__file__)
     results_dir = os.path.join(script_dir, out_dir)
-    analysis = ['PCA/', 'Arithmetic/', 'DWT/', 'MHWT/', 'Edge_Detection/']
+    # analysis = ['PCA/', 'Arithmetic/', 'DWT/', 'MHWT/', 'Edge_Detection/']
     if not os.path.isdir(results_dir):
         os.makedirs(results_dir)
-    for algorithm in analysis:
-        temp_dir = os.path.join(results_dir, algorithm)
+    for subdir in subdirs:
+        temp_dir = os.path.join(results_dir, subdir)
         if not os.path.isdir(temp_dir):
             os.makedirs(temp_dir)   
     return
@@ -179,8 +179,8 @@ def plot_scores(score_list, labels, legend, title, error_type, filename, log=Fal
     w = 0.4
     plt.xticks(x + w/4, labels, rotation=90)
     for idx, score in enumerate(score_list):
-        pop = ax.bar(x+(idx-2)*w, score, width=w, align='center', label=labels[idx])
-    plt.subplots_adjust(bottom=.4)
+        pop = ax.bar(x+(idx-1)*w, score, width=w, align='center', label=legend[idx])
+    plt.subplots_adjust(bottom=.45)
     ax.set_ylabel(error_type)
     ax.set_xlabel('Fusion Methods')
     ax.set_title(title)

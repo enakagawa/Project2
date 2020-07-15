@@ -45,12 +45,14 @@ def pca_analysis(img_list, title_list, output_dir, filename):
 
 def edge_detection_analysis(img_list, title_list, output_dir, filename):
 # Edge Detection with Canny Edges
-    alg_list = ['Canny', 'Fusion (Max)', 'Fusion (Max) +\n Smoothed']
+    # alg_list = ['Canny', 'Fusion (Max)', 'Fusion (Max) +\n Smoothed']
+    alg_list = ['Canny (Max)', 'Canny (Max) +\n Smoothed']
     out_imgs = []
     for idx, (img1, img2) in enumerate(img_list):
         edges, fused_edges = outline.get_edges(img1, img2, smoothed=False)
         _, fused_edges_smooth = outline.get_edges(img1, img2, smoothed=True)
-        out_imgs.append((edges, fused_edges, fused_edges_smooth))
+        # out_imgs.append((edges, fused_edges, fused_edges_smooth))
+        out_imgs.append((fused_edges, fused_edges_smooth))
     output_file = output_dir + filename 
     figsize = (5, 5)
     title = 'Edge Detection'
@@ -192,10 +194,11 @@ def main():
     ax = plt.subplot(1, 1, 1)
     w = 0.6
     plt.xticks(x, final_labels, rotation=90)
-    ax.bar(x + w/2, avg_scores, width=w, align='center', label=final_labels)
-    plt.subplots_adjust(bottom=0.3)
+    ax.bar(x, avg_scores, width=w, align='center', label=final_labels)
+    plt.subplots_adjust(bottom=0.45)
     ax.set_ylabel('SNR (dB)')
     ax.set_title('Average Algorithm Scores using SNR')
+    ax.set_xlabel('Fusion Methods')
     plt.savefig(OUTPUT_DIR + 'SNR_avg.png')
     # plt.show()
     # plot_scores(avg_scores, final_labels, desc_list, 'SNR (dB)', 'Signal-To-Noise(SNR) Avg Scores', OUTPUT_DIR + 'SNR_avg.png', log=True)

@@ -17,6 +17,8 @@ def fuse_coeff(partA, partB, method):
     return coef
 
 def image_fusion(img1, img2, wavelet='db1', method='mean'):
+    # Wavelet can be adjusted
+    # Method is one of either {'mean', 'max', 'min'}
     coeff1 = pywt.wavedec2(img1, wavelet)
     coeff2 = pywt.wavedec2(img2, wavelet)
     fusedCoeff = []
